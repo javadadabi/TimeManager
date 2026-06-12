@@ -1,18 +1,18 @@
 [general]
 name=TimeManager
 description=Create animations visualizing spatio-temporal data
-version=3.7
+version=3.7.1
 about=TimeManager adds time controls to QGIS. Using these time controls, you can animate vector features based on a time attribute. There is also an experimental raster layer support and support for interpolation beween point geometries. You can create animations directly in the map window and export image series. 
 qgisMinimumVersion=3.0
-qgisMaximumVersion=3.99
+qgisMaximumVersion=4.1
 author=Anita Graser, Karolina Alexiou (aka carolinux), Seyed Javad Adabikhsoh
 email=javadadabi@gmail.com, anitagraser@gmx.at, carolinegr@gmail.com
-changelog=3.7
-    - hack/fix for https://github.com/javadadabi/TimeManager/issues/1 (LayerTreeView is not defined)
-    - hack/fix for https://github.com/javadadabi/TimeManager/issues/3 (NetCDF data/time dimension handling broken)
+changelog=3.7.1
+    - solved critical security issues
+    - Update Metadata for new Qgis version 4
 tags=spatio-temporal,time,animation
 icon=icon.png
 experimental=False
 homepage=https://github.com/javadadabi/TimeManager
-tracker=https://github.com/javadadabi/TimeManager/tree/timemanager/issues
+tracker=https://github.com/javadadabi/TimeManager/tree/timemanager
 repository=https://github.com/javadadabi/TimeManager/tree/timemanager
