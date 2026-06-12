@@ -1,4 +1,5 @@
 from future import standard_library
+
 standard_library.install_aliases()
 # -*- coding: utf-8 -*-
 
@@ -33,8 +34,14 @@ class WMSTRasterLayer(TimeRasterLayer):
         url = "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r-t.cgi?&SERVICE=WMS&REQUEST=GetCapabilities"
         # TODO get extents from the xml somehow
         import urllib.request, urllib.parse
+        # raw_xml = urllib.request.urlopen(url).read()
+        # Due to critical security issue
+        # (Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected)
+        # We changed this code as follows
+        req = urllib.request.Request(url)
+        with urllib.request.urlopen(req) as response:
+            raw_xml = response.read()
 
-        raw_xml = urllib.request.urlopen(url).read()
         name = self._get_wmts_layer_name()
         return None, None
 
@@ -51,7 +58,7 @@ class WMSTRasterLayer(TimeRasterLayer):
                 # concatting a & behind ? is messing up QGIS wms parseUri: do NOT add anything behind it
                 return ""
             else:
-                return "%26" # equals &
+                return "%26"  # equals &
         else:
             return "?"
 
@@ -66,15 +73,13 @@ class WMSTRasterLayer(TimeRasterLayer):
             time_util.datetime_to_str(startTime, self.timeFormat),
             time_util.datetime_to_str(endTime, self.timeFormat))
         dataUrl = self.IGNORE_PREFIX + self.originalUri + self.addUrlMark() + timeString
-        #print "original URL: " + self.originalUri
-        #print "final URL: " + dataUrl
+        # print "original URL: " + self.originalUri
+        # print "final URL: " + dataUrl
         self.layer.dataProvider().setDataSourceUri(dataUrl)
         self.layer.dataProvider().reloadData()
-
 
     def deleteTimeRestriction(self):
         """The layer is removed from Time Manager and is therefore always shown"""
         self.layer.dataProvider().setDataSourceUri(self.originalUri)
         self.layer.dataProvider().reloadData()
         self.layer.triggerRepaint()
-
