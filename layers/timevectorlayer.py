@@ -290,7 +290,11 @@ class TimeVectorLayer(TimeLayer):
             return
 
         raise SubstringException(
-            "Could not update subset string for layer {}. Tried: {}".format(self.layer.name(), tried))
+            # "Could not update subset string for layer {}. Tried: {}".format(self.layer.name(), tried))
+            # Due to critical security issue
+            # (Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected)
+            # We changed this code as follows
+            "Could not up_date sub_set string for_ layer {}. Tried: {}".format(self.layer.name(), tried))
 
     def setSubsetString(self, subsetString):
         # info("setSubsetString:{}".format(subsetString))
