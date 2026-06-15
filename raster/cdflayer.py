@@ -79,8 +79,10 @@ class CDFRasterLayer(TimeRasterLayer):
     @classmethod
     def extract_epoch_units(cls, bandName):
         # Band name expected to be like: 'Band 1: time=20116800 (minutes since 1970-01-01 00:00:00)'
-        pattern = "time=(\d+)\s*[(](.+)[)]"
+        pattern = r'time=[+-]?(\d+\.?\d+?)\s*[(](.+)[)]' #"time=(\d+)\s*[(](.+)[)]"
         matches = re.findall(pattern, bandName)[0]
+        # return float(matches[0]), matches[1]
+        # TODO Due to slider stop problem,  floating point numbered epoches does not support yet
         return int(matches[0]), matches[1]
 
     @classmethod
@@ -171,7 +173,10 @@ class CDFRasterLayer(TimeRasterLayer):
             # TODO
             # More work is needed to handle decimal time units like 1236.45 days since 1975
             # because timer does'nt stop counting after reaching the end
-            bandNo = self.get_first_band_between(self.dataset_time, self.band_to_dt, startTime, endTime)
+            try:
+                bandNo = self.get_first_band_between(self.dataset_time, self.band_to_dt, startTime, endTime)
+            except:
+                bandNo = self.get_first_band_between(dts_time=None, dts=self.band_to_dt, start_dt=startTime, end_dt=endTime)
             self.layer.renderer().setBand(bandNo)
 
     def deleteTimeRestriction(self):
