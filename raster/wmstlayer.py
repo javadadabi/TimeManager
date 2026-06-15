@@ -33,16 +33,11 @@ class WMSTRasterLayer(TimeRasterLayer):
         # TODO get url from original uri
         url = "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r-t.cgi?&SERVICE=WMS&REQUEST=GetCapabilities"
         # TODO get extents from the xml somehow
-        # import urllib.request, urllib.parse
-        # raw_xml = urllib.request.urlopen(url).read()
         # Due to critical security issue
         # (Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected)
-        # We changed this code as follows
-        from urllib.request import urlopen
-        if not url.startswith(("http:", "https:")):
-            raise ValueError("Url must start with 'http:' or 'https:'")
-        with urlopen(url) as response:
-            raw_xml = response.read()
+        # We commented this part of code
+        # import urllib.request, urllib.parse
+        # raw_xml = urllib.request.urlopen(url).read()
 
         name = self._get_wmts_layer_name()
         return None, None
