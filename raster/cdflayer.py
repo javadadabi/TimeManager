@@ -173,10 +173,7 @@ class CDFRasterLayer(TimeRasterLayer):
             # TODO
             # More work is needed to handle decimal time units like 1236.45 days since 1975
             # because timer does'nt stop counting after reaching the end
-            try:
-                bandNo = self.get_first_band_between(self.dataset_time, self.band_to_dt, startTime, endTime)
-            except:
-                bandNo = self.get_first_band_between(dts_time=None, dts=self.band_to_dt, start_dt=startTime, end_dt=endTime)
+            bandNo = self.get_first_band_between(self.dataset_time, self.band_to_dt, startTime, endTime)
             self.layer.renderer().setBand(bandNo)
 
     def deleteTimeRestriction(self):
