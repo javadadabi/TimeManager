@@ -121,7 +121,7 @@ class TimeManagerGuiControl(QObject):
         self.sliderTimer.timeout.connect(self.currentTimeChangedSlider)
         self.dock.horizontalTimeSlider.valueChanged.connect(self.startTimer)
 
-        self.dock.comboBoxTimeExtent.currentIndexChanged[str].connect(self.currentTimeFrameTypeChanged)
+        self.dock.comboBoxTimeExtent.currentTextChanged.connect(self.currentTimeFrameTypeChanged)
         self.dock.spinBoxTimeExtent.valueChanged.connect(self.currentTimeFrameSizeChanged)
 
         # this signal is responsible for rendering the label
